@@ -1,0 +1,21 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/bootstrap';
+
+$code-color: gray;
+$text-color: #2D2D2D;
+$text-description-color: #4d4d4d;
+$white: #ffffff;
+
+body {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  background-color: #FFF;
+  color: $text-color;
+  font-size: 1em;
+  letter-spacing: 0.4px;
+  line-height: 1.5;
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
