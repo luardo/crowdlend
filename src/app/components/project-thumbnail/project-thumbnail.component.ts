@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-project-thumbnail',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project-thumbnail.component.css']
 })
 export class ProjectThumbnailComponent implements OnInit {
+
+  @Input() id: number;
+  @Input() thumbnail: string;
+  @Input() name: string;
+  @Input() amount: string;
 
   constructor() { }
 

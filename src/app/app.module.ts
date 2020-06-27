@@ -7,6 +7,9 @@ import {RouterModule, Routes} from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {InterceptorService} from './services/interceptor.service';
+import { SingleProjectComponent } from './pages/single-project/single-project.component';
 
 
 
@@ -15,14 +18,22 @@ import { ProjectThumbnailComponent } from './components/project-thumbnail/projec
     AppComponent,
     HomeComponent,
     ProjectsComponent,
-    ProjectThumbnailComponent
+    ProjectThumbnailComponent,
+    SingleProjectComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

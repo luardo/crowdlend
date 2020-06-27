@@ -1,0 +1,36 @@
+<div class="container" *ngIf="project">
+  <div class="row">
+    <div class="col-lg-8">
+
+      <h1>{{ project.name }}</h1>
+
+
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{{ project.thumbnail }}" class="d-block w-100" alt="...">
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-lg-4">
+
+      <h4>Funding</h4>
+      <p>80%</p>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
+      <div><span  class="h3">240000 € </span> <small>Invested</small></div>
+
+      <button class="btn btn-lg btn-block btn-info">Invest now</button>
+
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="!project">loading...</div>
