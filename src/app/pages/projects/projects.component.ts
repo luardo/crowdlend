@@ -32,7 +32,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   private subscribePromotedProjects(): Subscription {
     return this.projectsService.getProjects().pipe(
-      map(projects => projects.slice(0, 5)),
+      map(projects => {
+          return projects.map(project => {
+            return new Project(project);
+          });
+        }
+      ),
     ).subscribe(projects => {
       this.promotedProjects = projects;
     });

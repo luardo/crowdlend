@@ -1,1 +1,45 @@
-<p>invest works!</p>
+<div class="container mt-3" *ngIf="!!currentProject">
+  <div class="media">
+    <img src="{{ currentProject.thumbnail }}"  width="64" height="64" class="mr-3" alt="...">
+    <div class="media-body">
+      <h5 class="mt-0">{{ currentProject.name }}</h5>
+
+
+      <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{ width: currentProject.fundedPercent + '%' }" aria-valuemin="0"
+             aria-valuemax="100">{{ currentProject.fundedPercent  | number: '1.0-0' }}%</div>
+      </div>
+      <small>{{ currentProject.amount | currency }} from {{ currentProject.amountRequired | currency  }} financed ({{ currentProject.fundedPercent  | number: '1.0-0' }}%)</small>
+
+    </div>
+  </div>
+
+  <form [formGroup]="investmentForm" (ngSubmit)="createInvestmentOrder()">
+    <div class="my-4">
+      <div class="h5 font-weight-bold">Select the amount to invest </div>
+      <ng5-slider [formControl]="investmentFormControl.amount" [options]="options"></ng5-slider>
+    </div>
+
+    <div class="h3 text-center font-weight-bold">{{investmentFormControl.amount.value | currency }}</div>
+
+
+    <button class="btn btn-block btn-success btn-lg">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      <ng-container  *ngIf="loading">Processing transaction...</ng-container>
+      <ng-container *ngIf="!loading">Invest now!</ng-container>
+    </button>
+
+
+    <div class="form-group form-check">
+      <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && investmentFormControl.acceptTerms.errors }" />
+      <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+      <div *ngIf="submitted && investmentFormControl.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
+    </div>
+  </form>
+
+</div>
+
+<div *ngIf="!currentProject">
+  loading...
+</div>
+

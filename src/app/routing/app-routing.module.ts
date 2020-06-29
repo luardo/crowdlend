@@ -7,6 +7,7 @@ import {SingleProjectComponent} from '../pages/single-project/single-project.com
 import {RegisterComponent} from '../pages/register/register.component';
 import {LoginComponent} from '../pages/login/login.component';
 import {CheckAuthService} from '../services/check-auth.service';
+import {InvestComponent} from '../pages/invest/invest.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'project/:id/invest',
+    component: InvestComponent,
+    canActivate: [CheckAuthService]
   },
   {
     path: 'project/:id',

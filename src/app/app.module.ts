@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Ng5SliderModule } from 'ng5-slider';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing/app-routing.module';
@@ -33,6 +34,7 @@ import { InvestComponent } from './pages/invest/invest.component';
     RouterModule,
     HttpClientModule,
     ReactiveFormsModule,
+    Ng5SliderModule
   ],
   providers: [
     {

@@ -2,17 +2,23 @@
 
   <h3>Latest projects</h3>
 
-  <div class="d-flex flex-wrap" *ngIf="promotedProjects as projects">
+  <div class="row" *ngIf="promotedProjects as projects">
 
-    <ng-container *ngFor="let project of projects">
+    <div class="col-md-4" *ngFor="let project of projects">
 
       <app-project-thumbnail
         [id]="project.id"
         [thumbnail]="project.thumbnail"
+        [amount]="project.amount"
+        [goal]="project.amountRequired"
+        [description]="project.description"
+        [percentFunded]="project.fundedPercent"
+        [location]="project.cityAndCountry"
         [name]="project.name">
 
       </app-project-thumbnail>
-    </ng-container>
+
+    </div>
 
 
   </div>

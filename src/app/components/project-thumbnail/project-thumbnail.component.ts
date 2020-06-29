@@ -9,8 +9,12 @@ export class ProjectThumbnailComponent implements OnInit {
 
   @Input() id: number;
   @Input() thumbnail: string;
+  @Input() description: string;
   @Input() name: string;
-  @Input() amount: string;
+  @Input() amount: number;
+  @Input() goal: number;
+  @Input() location: string;
+  @Input() percentFunded: number;
 
   constructor() { }
 
