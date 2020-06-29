@@ -1,1 +1,20 @@
-<p>projects works!</p>
+<div class="container">
+
+  <h3>Latest projects</h3>
+
+  <div class="d-flex flex-wrap" *ngIf="promotedProjects as projects">
+
+    <ng-container *ngFor="let project of projects">
+
+      <app-project-thumbnail
+        [id]="project.id"
+        [thumbnail]="project.thumbnail"
+        [name]="project.name">
+
+      </app-project-thumbnail>
+    </ng-container>
+
+
+  </div>
+
+</div>

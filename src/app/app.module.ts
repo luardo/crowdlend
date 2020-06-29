@@ -10,7 +10,10 @@ import { ProjectThumbnailComponent } from './components/project-thumbnail/projec
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
 import { SingleProjectComponent } from './pages/single-project/single-project.component';
-
+import { RegisterComponent } from './pages/register/register.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './pages/login/login.component';
+import { InvestComponent } from './pages/invest/invest.component';
 
 
 @NgModule({
@@ -19,20 +22,24 @@ import { SingleProjectComponent } from './pages/single-project/single-project.co
     HomeComponent,
     ProjectsComponent,
     ProjectThumbnailComponent,
-    SingleProjectComponent
+    SingleProjectComponent,
+    RegisterComponent,
+    LoginComponent,
+    InvestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

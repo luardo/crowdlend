@@ -2,27 +2,8 @@
   <div class="container text-center">
     <h1>Invest in real estate</h1>
     <h2>Make up to 6% profit by crowd-investing</h2>
-    <button class="btn btn-lg btn-info">Explore projects</button>
+    <button class="btn btn-lg btn-info" routerLink="/projects">Explore projects</button>
   </div>
 </section>
 
-<div class="container">
 
-  <h3>Latest projects</h3>
-
-  <div class="d-flex flex-wrap" *ngIf="promotedProjects as projects">
-
-    <ng-container *ngFor="let project of projects">
-
-      <app-project-thumbnail
-        [id]="project.id"
-        [thumbnail]="project.thumbnail"
-        [name]="project.name">
-
-      </app-project-thumbnail>
-    </ng-container>
-
-
-  </div>
-
-</div>

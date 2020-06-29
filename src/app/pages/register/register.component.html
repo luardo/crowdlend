@@ -1,0 +1,72 @@
+<div class="container" *ngIf="!registerSuccess && !registerFailed">
+  <h1 class="h3 my-4">Create an account</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <div class="form-row">
+
+      <div class="form-group col-12">
+        <label>Username</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.username.errors }" />
+        <div *ngIf="submitted && registerFormControl.username.errors" class="invalid-feedback">
+          <div *ngIf="registerFormControl.username.errors.required">username is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-6">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.firstName.errors }" />
+        <div *ngIf="submitted && registerFormControl.firstName.errors" class="invalid-feedback">
+          <div *ngIf="registerFormControl.firstName.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.lastName.errors }" />
+        <div *ngIf="submitted && registerFormControl.lastName.errors" class="invalid-feedback">
+          <div *ngIf="registerFormControl.lastName.errors.required">Last Name is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.email.errors }" />
+      <div *ngIf="submitted && registerFormControl.email.errors" class="invalid-feedback">
+        <div *ngIf="registerFormControl.email.errors.required">Email is required</div>
+        <div *ngIf="registerFormControl.email.errors.email">Email must be a valid email address</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Password</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.password.errors }" />
+        <div *ngIf="submitted && registerFormControl.password.errors" class="invalid-feedback">
+          <div *ngIf="registerFormControl.password.errors.required">Password is required</div>
+          <div *ngIf="registerFormControl.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerFormControl.confirmPassword.errors }" />
+        <div *ngIf="submitted && registerFormControl.confirmPassword.errors" class="invalid-feedback">
+          <div *ngIf="registerFormControl.confirmPassword.errors.required">Confirm Password is required</div>
+          <div *ngIf="registerFormControl.confirmPassword.errors.mustMatch">Passwords must match</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && registerFormControl.acceptTerms.errors }" />
+      <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+      <div *ngIf="submitted && registerFormControl.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary mr-1 btn-block">Register</button>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="registerSuccess">
+  <h2>Success! your account has been created!</h2>
+
+  <button class="btn btn-success" routerLink="/login">Log in to start investing</button>
+</div>
+
+
