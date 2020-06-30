@@ -18,19 +18,20 @@ export class User implements IUser {
   password: string;
   token?: string;
 
-  constructor({username, name, lastname, email}) {
+  constructor({username, name, lastname, email, password}) {
     this.id = Faker.random.number();
     this.name = name;
     this.lastname = lastname;
     this.email = email;
     this.username = username;
+    this.password = password;
   }
 
   getId() {
     return this.id;
   }
 
-  getFullName() {
+  get fullName() {
     return `${this.name} ${this.lastname}`;
   }
 }

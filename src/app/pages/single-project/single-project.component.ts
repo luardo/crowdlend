@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+
 import {ProjectsService} from '../../services/projects.service';
-import {ILocation, Project} from '../../models/project';
+import {Project} from '../../models/project';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-single-project',
@@ -12,17 +14,31 @@ export class SingleProjectComponent implements OnInit {
 
   public project: Project;
 
-  constructor(private projectsService: ProjectsService) {
+  public projectId: string;
+  public canInvest = false;
+
+  constructor(
+    private projectsService: ProjectsService,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
 
-    this.projectsService.getProjectById(1).subscribe(response => {
-
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('id');
+        this.projectId = id;
+        return this.projectsService.getProjectById(id);
+      }),
+      tap(response => {
         this.project = new Project(response);
+      }),
+      switchMap(response => {
+        return this.projectsService.getProjectAvailability(response.id.toString());
+      })
+    ).subscribe(({canInvest}) => {
+      this.canInvest = canInvest;
       }
     );
   }
-
-
 }

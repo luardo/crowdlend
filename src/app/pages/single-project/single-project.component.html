@@ -1,4 +1,4 @@
-<div class="container" *ngIf="project">
+<section class="container" *ngIf="project">
   <div class="row">
     <div class="col-lg-8">
 
@@ -8,7 +8,8 @@
           <path fill-rule="evenodd"
                 d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
         </svg>
-        {{project.cityAndCountry}}</small>
+        {{project.cityAndCountry}}
+      </small>
       <h1 class="h4 font-weight-bold">{{ project.name }}</h1>
 
       <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -19,11 +20,9 @@
 
         </div>
       </div>
-
-
     </div>
-    <div class="col-lg-4">
 
+    <div class="col-lg-4">
       <small class="mb-3">
         {{ project.amount | currency }} from {{ project.amountRequired | currency  }} financed
         ({{ project.fundedPercent  | number: '1.0-0' }}%)
@@ -44,9 +43,16 @@
         <span>Goal: </span> <strong>{{project.amountRequired | currency }}</strong>
       </div>
 
-      <div class="my-4 text-center ">
+      <div class="my-4 text-center " *ngIf="canInvest">
         <button class="btn btn-lg btn-block btn-primary" [routerLink]="'invest'">Invest now</button>
         <small class="text-muted">5.1% Average returns if you start investing now<sup>*</sup></small>
+      </div>
+
+      <div class="my-4 text-center " *ngIf="!canInvest">
+        <p class="text-muted">You have invested already in this project</p>
+        <p>
+          <button class="btn btn-lg btn-block btn-primary" [routerLink]="'/projects'">Find more opportunities</button>
+        </p>
       </div>
 
     </div>
@@ -58,7 +64,6 @@
       </p>
     </div>
   </div>
-
-</div>
+</section>
 
 <div *ngIf="!project">loading...</div>

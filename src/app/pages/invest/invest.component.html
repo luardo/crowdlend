@@ -1,18 +1,13 @@
-<div class="container mt-3" *ngIf="!!currentProject">
-  <div class="media">
-    <img src="{{ currentProject.thumbnail }}"  width="64" height="64" class="mr-3" alt="...">
-    <div class="media-body">
-      <h5 class="mt-0">{{ currentProject.name }}</h5>
+<section class="container mt-3" *ngIf="!!currentProject && !transactionSuccess">
 
-
-      <div class="progress">
-        <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{ width: currentProject.fundedPercent + '%' }" aria-valuemin="0"
-             aria-valuemax="100">{{ currentProject.fundedPercent  | number: '1.0-0' }}%</div>
-      </div>
-      <small>{{ currentProject.amount | currency }} from {{ currentProject.amountRequired | currency  }} financed ({{ currentProject.fundedPercent  | number: '1.0-0' }}%)</small>
-
-    </div>
-  </div>
+  <app-project-thumbnail
+    [id]="currentProject.id"
+    [amount]="currentProject.amount"
+    [amountRequired]="currentProject.amountRequired"
+    [name]="currentProject.name"
+    [fundedPercent]="currentProject.fundedPercent"
+    [thumbnail]="currentProject.thumbnail">
+  </app-project-thumbnail>
 
   <form [formGroup]="investmentForm" (ngSubmit)="createInvestmentOrder()">
     <div class="my-4">
@@ -22,8 +17,7 @@
 
     <div class="h3 text-center font-weight-bold">{{investmentFormControl.amount.value | currency }}</div>
 
-
-    <button class="btn btn-block btn-success btn-lg">
+    <button class="btn btn-block btn-success btn-lg" *ngIf="canInvest">
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       <ng-container  *ngIf="loading">Processing transaction...</ng-container>
       <ng-container *ngIf="!loading">Invest now!</ng-container>
@@ -37,9 +31,44 @@
     </div>
   </form>
 
-</div>
+</section>
 
 <div *ngIf="!currentProject">
   loading...
 </div>
+
+<section class="container" *ngIf="submitted && transactionSuccess">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center">Congratulations</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <app-project-thumbnail
+        [id]="currentProject.id"
+        [amount]="currentProject.amount"
+        [amountRequired]="currentProject.amountRequired"
+        [name]="currentProject.name"
+        [fundedPercent]="currentProject.fundedPercent"
+        [thumbnail]="currentProject.thumbnail">
+      </app-project-thumbnail>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-auto">
+      <div class="text-center">
+        <h3>Your investment has been successful</h3>
+        <p>Want to invest in more projects? Explore more of the opportunities we have!</p>
+
+        <button class="btn btn-lg btn-block btn-secondary" [routerLink]="'/dashboard'">Go to my dashboard</button>
+
+        <button class="btn btn-lg btn-block btn-primary" [routerLink]="'/projects'">Discover more projects</button>
+      </div>
+    </div>
+  </div>
+
+</section>
 

@@ -1,20 +1,323 @@
 import * as Factory from 'factory.ts';
 import * as Faker from 'faker';
-import {ILocation, IProject, Project} from '../models/project';
+import {ILocation, IProject} from '../models/project';
 
 const locationMockFactory = Factory.Sync.makeFactory<ILocation>({
-  country: Factory.each( () => Faker.address.country()),
+  country: Factory.each(() => Faker.address.country()),
   zipCode: Faker.address.zipCode(),
-  city: Factory.each( () => Faker.address.city()),
+  city: Factory.each(() => Faker.address.city()),
   address: Faker.address.streetAddress(true)
 });
-export  const projectMockFactory = Factory.Sync.makeFactory<IProject>({
-  id:  Factory.each( () => Faker.random.number()),
-  thumbnail: Factory.each( () => Faker.image.image()),
-  name: Factory.each( () => Faker.commerce.productName()),
-  location: Factory.each( () => locationMockFactory.build()),
-  amount: Factory.each( () => Faker.random.number({min: 20000, max: 990000})),
-  amountRequired: Factory.each( () => Faker.random.number({min: 1000000})),
-  description: Factory.each( () => Faker.lorem.paragraphs()),
+export const projectMockFactory = Factory.Sync.makeFactory<IProject>({
+  id: Factory.each(() => Faker.random.number()),
+  thumbnail: Factory.each(() => Faker.image.image()),
+  name: Factory.each(() => Faker.commerce.productName()),
+  location: Factory.each(() => locationMockFactory.build()),
+  amount: Factory.each(() => Faker.random.number({min: 20000, max: 990000})),
+  amountRequired: Factory.each(() => Faker.random.number({min: 1000000})),
+  description: Factory.each(() => Faker.lorem.paragraphs()),
   currency: Faker.finance.currencyCode()
-})
+});
+
+export const projectsFromFakeDataBase = [
+  {
+    id: 98465,
+    thumbnail: 'http://lorempixel.com/640/480/transport',
+    name: 'Unbranded Soft Salad',
+    location: {
+      country: 'Virgin Islands, U.S.',
+      zipCode: '53267',
+      city: 'North Fredrickport',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 114496,
+    amountRequired: 275984,
+    description: 'Quis libero voluptatem impedit eum consequatur iure. Vel aut error saepe quaerat est corporis voluptatem. Consequuntur illum suscipit necessitatibus tempora et quis adipisci alias dolore. Quia ullam error eos dolor modi non expedita.\n \rIllo a atque quis voluptatem provident adipisci quasi sunt voluptate. Laboriosam commodi delectus consequatur assumenda sit. Totam eum rem dolore exercitationem.\n \rIste quia et id et sed cupiditate ea. Quia dignissimos eos. Et id quibusdam reiciendis ea ducimus vitae et. Neque perspiciatis labore inventore sequi non. Ut quia necessitatibus id praesentium sit nobis cum quia velit. Illum dolorem ut libero sit nihil repudiandae est.',
+    currency: 'VUV'
+  },
+  {
+    id: 65723,
+    thumbnail: 'http://lorempixel.com/640/480/abstract',
+    name: 'Incredible Steel Keyboard',
+    location: {
+      country: 'Spain',
+      zipCode: '53267',
+      city: 'Amiraberg',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 364357,
+    amountRequired: 132740,
+    description: 'Rem repellat tenetur accusantium omnis sunt quo omnis sequi. Blanditiis odio molestiae veritatis. Consequatur accusantium temporibus eaque sed delectus omnis. Odit ex quia sequi aperiam culpa dolorem consequatur. Corrupti vel aut sit consequatur nemo. Et voluptas quia veniam id.\n \rRatione totam sapiente et. Omnis voluptas quaerat non. Illo doloremque et accusamus voluptatem et sit sed.\n \rDucimus adipisci repellat inventore expedita vitae quia. Occaecati blanditiis impedit qui. Earum amet repellat aut reiciendis illo qui adipisci voluptatem optio.',
+    currency: 'VUV'
+  },
+  {
+    id: 48889,
+    thumbnail: 'http://lorempixel.com/640/480/animals',
+    name: 'Ergonomic Wooden Tuna',
+    location: {
+      country: 'Lao People\'s Democratic Republic',
+      zipCode: '53267',
+      city: 'South Cieloside',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 399991,
+    amountRequired: 799419,
+    description: 'Sit ut autem rerum cupiditate consequatur dolores explicabo. Molestias veritatis beatae voluptas qui. Est quod modi deleniti fugiat impedit possimus labore. Vero voluptates voluptatem nemo accusamus temporibus fugiat facilis. Illum dolorum officia.\n \rReiciendis autem consequatur. Rerum velit quos perspiciatis atque. Hic sapiente labore ducimus possimus officia deserunt. Animi ipsam aut ducimus accusamus non sit magnam aspernatur consequatur. Voluptas culpa dolores earum suscipit et.\n \rAssumenda adipisci commodi cupiditate blanditiis corrupti ipsa distinctio corporis. Aliquid eveniet aliquam. Non asperiores harum totam eaque non veritatis. Est optio in ut et incidunt sit voluptates officia. Sed amet mollitia qui commodi laudantium. A saepe eos rem necessitatibus ad voluptas.',
+    currency: 'VUV'
+  },
+  {
+    id: 34446,
+    thumbnail: 'http://lorempixel.com/640/480/transport',
+    name: 'Gorgeous Fresh Table',
+    location: {
+      country: 'Malta',
+      zipCode: '53267',
+      city: 'Collinsstad',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 482444,
+    amountRequired: 246392,
+    description: 'Quod odio ea. Non porro consequatur veniam. Quisquam quam amet. Impedit veritatis maiores aut et consequatur cum error rem.\n \rAut sed optio ut. Eos fugit commodi aperiam quis officia quae. In et voluptates rem ducimus vitae eos nostrum. Dicta cum quaerat sapiente beatae est.\n \rSit tempore fugit qui adipisci. Esse earum eaque placeat aut libero aliquam accusamus. Veritatis dolorem vitae temporibus quas est magni.',
+    currency: 'VUV'
+  },
+  {
+    id: 72893,
+    thumbnail: 'http://lorempixel.com/640/480/city',
+    name: 'Tasty Steel Shoes',
+    location: {
+      country: 'Palau',
+      zipCode: '53267',
+      city: 'Felicityview',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 741146,
+    amountRequired: 961278,
+    description: 'Maiores inventore quod dignissimos aspernatur ipsam est dolorum veniam. Voluptate tempore qui quis accusantium enim. Accusantium ut sint provident. Dignissimos et aliquid voluptatem. Ipsum voluptatibus quaerat explicabo rerum.\n \rConsequatur nihil est enim voluptatibus ea maxime modi sunt. A rem sit. Et aut accusamus et sint sit alias quasi. Corrupti molestiae omnis doloribus non modi atque.\n \rConsequatur voluptas qui debitis quod repellat delectus in animi. Minima quia hic alias qui quia quisquam eaque ratione accusamus. Consectetur non eaque sed. Totam quas eligendi omnis eius voluptatem dolores.',
+    currency: 'VUV'
+  },
+  {
+    id: 45053,
+    thumbnail: 'http://lorempixel.com/640/480/business',
+    name: 'Tasty Steel Car',
+    location: {
+      country: 'Estonia',
+      zipCode: '53267',
+      city: 'South Gerardoborough',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 451973,
+    amountRequired: 859934,
+    description: 'Nobis quibusdam a possimus alias et voluptates quis provident. Cum mollitia nostrum iste vitae facilis nesciunt aut accusantium minus. Optio quas dolores numquam in culpa eum. Ipsum voluptas corporis. Id odit ut animi ullam cupiditate quibusdam. Officia eligendi nostrum.\n \rAutem accusamus illum molestiae repudiandae. Vel fugit corporis voluptas aut aut et. Laborum quae reiciendis eius consequatur voluptatibus est. Autem qui et eos.\n \rProvident nihil sed eligendi magni accusantium dolorem. In placeat accusantium eveniet eum. Inventore quo eveniet ab voluptates voluptas ad aut quod enim. Rerum laborum est blanditiis aperiam possimus et facere beatae. Provident cupiditate inventore a omnis ut ut voluptas tempora. Consequatur earum perferendis iure sit ut eum.',
+    currency: 'VUV'
+  },
+  {
+    id: 81748,
+    thumbnail: 'http://lorempixel.com/640/480/nature',
+    name: 'Generic Wooden Pants',
+    location: {
+      country: 'Mexico',
+      zipCode: '53267',
+      city: 'Legrosport',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 241466,
+    amountRequired: 707513,
+    description: 'Atque et molestiae. Magni delectus quaerat sequi. Incidunt maxime pariatur. Tempore nobis ipsam iure ab quasi quo sed id. Reiciendis aut consectetur consequatur deleniti aperiam quam sapiente ut.\n \rVoluptatum omnis cum. Explicabo voluptatem tempora non earum laborum sit aspernatur. Nulla nobis sunt cum vitae optio.\n \rEa doloribus magnam consequuntur. Quis tenetur pariatur est nobis architecto. Vero earum sit aut unde rerum debitis aut. Voluptatem qui fuga ad ex incidunt laudantium deserunt quis.',
+    currency: 'VUV'
+  },
+  {
+    id: 94903,
+    thumbnail: 'http://lorempixel.com/640/480/animals',
+    name: 'Tasty Soft Salad',
+    location: {
+      country: 'Peru',
+      zipCode: '53267',
+      city: 'Antoniettamouth',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 933055,
+    amountRequired: 451829,
+    description: 'Consequatur eum veniam voluptate. Sunt et voluptates. Vel labore aut laborum rerum reprehenderit mollitia at non occaecati.\n \rUt ad temporibus temporibus ex. Quia porro quod itaque nisi magnam. Accusantium voluptas doloremque aut quia.\n \rEum at itaque sit debitis velit. Aliquid sapiente facere dolor et nam. Cupiditate a cupiditate quia velit. Eos magnam sapiente architecto sint.',
+    currency: 'VUV'
+  },
+  {
+    id: 35145,
+    thumbnail: 'http://lorempixel.com/640/480/nature',
+    name: 'Ergonomic Wooden Shoes',
+    location: {
+      country: 'Guadeloupe',
+      zipCode: '53267',
+      city: 'Paytontown',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 553703,
+    amountRequired: 951640,
+    description: 'Consectetur labore aliquid culpa omnis corporis ex voluptatem. Cumque dolorem dolores nisi aliquid aliquid vitae. Odio voluptatum voluptas expedita qui eos qui sit vel at.\n \rCommodi quaerat aliquam ea et ut deserunt occaecati. Aut nulla illo accusamus quibusdam rerum deserunt eligendi provident voluptas. Blanditiis non et delectus mollitia quidem est aut qui est. Eius sunt ut porro voluptas. Nobis porro a omnis quod. Odio ut fugiat inventore qui consectetur repellat eum.\n \rRerum qui voluptas vel ea quidem. Necessitatibus amet reiciendis eum soluta possimus asperiores ut repellendus qui. Rerum corporis sapiente aut pariatur sunt beatae quaerat atque.',
+    currency: 'VUV'
+  },
+  {
+    id: 99343,
+    thumbnail: 'http://lorempixel.com/640/480/nature',
+    name: 'Generic Fresh Sausages',
+    location: {
+      country: 'Iran',
+      zipCode: '53267',
+      city: 'West Ibrahimberg',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 329373,
+    amountRequired: 430288,
+    description: 'Atque praesentium a labore consequatur molestiae voluptatem. Recusandae at repellendus est voluptas animi officiis aspernatur ut voluptatibus. Vel adipisci ab aut aliquid molestiae rerum labore eligendi. Qui quidem est distinctio non maxime perspiciatis non.\n \rCupiditate consequuntur et odit et fugit natus accusamus minus. Dolor optio voluptatibus deleniti iste laboriosam. Sint esse asperiores repellendus similique. Quo laudantium iure explicabo. Aliquam praesentium sequi et tempore numquam.\n \rReiciendis sint omnis sapiente quia. Cumque recusandae voluptatem sint non asperiores sunt alias pariatur fuga. Placeat corporis nulla quo. Deleniti rerum quaerat error. Qui enim odit sapiente.',
+    currency: 'VUV'
+  },
+  {
+    id: 11717,
+    thumbnail: 'http://lorempixel.com/640/480/nightlife',
+    name: 'Ergonomic Plastic Fish',
+    location: {
+      country: 'Norway',
+      zipCode: '53267',
+      city: 'Pagacfurt',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 621330,
+    amountRequired: 601536,
+    description: 'Dolore et facere aut voluptatibus. Eos reprehenderit vero vero nobis molestias architecto quo debitis. Voluptate culpa est.\n \rConsequuntur porro enim nostrum iste aut debitis facilis et nesciunt. Amet laboriosam temporibus ut eum voluptatem. Quam repellendus praesentium explicabo ea excepturi laudantium sit nisi. Praesentium voluptatum tempore ea nulla sint ipsam autem sit. Eius sit quos non quae.\n \rNumquam atque aut dicta dolores ducimus nam natus at et. Aut est voluptas. Eligendi nemo eius aut accusamus velit. Porro qui perspiciatis est libero rem doloremque architecto qui.',
+    currency: 'VUV'
+  },
+  {
+    id: 86393,
+    thumbnail: 'http://lorempixel.com/640/480/transport',
+    name: 'Licensed Steel Bike',
+    location: {
+      country: 'Tunisia',
+      zipCode: '53267',
+      city: 'East Ursula',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 707646,
+    amountRequired: 623725,
+    description: 'Reprehenderit minus ullam natus consequatur tenetur enim assumenda adipisci voluptate. Numquam reprehenderit enim blanditiis porro reiciendis ut quisquam perferendis qui. Odio inventore sit velit.\n \rFacere quod quo quo ducimus reiciendis est dolorum ab accusantium. Quia atque unde rem repellat illo voluptatem neque ducimus. Est saepe nobis voluptatum. Unde voluptatem minus modi consequuntur sunt quas quia et a. Repellat odio deserunt deserunt. Qui omnis vel non non alias ut dolor neque.\n \rConsectetur nostrum sint saepe distinctio cumque qui qui voluptas libero. Sit enim sapiente quae ducimus itaque. Maiores aut aut occaecati ut. Molestiae magni praesentium illum necessitatibus qui soluta praesentium molestiae fuga. Enim tenetur molestias quia et perferendis est.',
+    currency: 'VUV'
+  },
+  {
+    id: 2089,
+    thumbnail: 'http://lorempixel.com/640/480/cats',
+    name: 'Handmade Fresh Gloves',
+    location: {
+      country: 'Mexico',
+      zipCode: '53267',
+      city: 'Abigaylemouth',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 738067,
+    amountRequired: 124120,
+    description: 'Praesentium rerum ut qui fugiat similique voluptas et. Cum laboriosam repellat. Qui sapiente et nostrum aliquid voluptatibus rerum quia et et.\n \rQuos voluptate tenetur qui voluptatibus laudantium dolor facilis non velit. Aut architecto consequatur delectus itaque exercitationem laboriosam. Perferendis et soluta officiis magni quidem quidem sed nam. Nostrum doloremque ipsam possimus sapiente et eos ipsam tenetur voluptas. Ullam expedita quo. Aut in earum expedita ut sed alias aut est necessitatibus.\n \rEos exercitationem qui at dolor. Quidem explicabo assumenda qui maiores modi et velit rerum. Omnis non voluptas quis incidunt atque nihil nisi velit et. Sed unde vel. Accusamus suscipit aut qui aut. Necessitatibus tempore dolorem voluptatum assumenda possimus.',
+    currency: 'VUV'
+  },
+  {
+    id: 42813,
+    thumbnail: 'http://lorempixel.com/640/480/food',
+    name: 'Rustic Frozen Keyboard',
+    location: {
+      country: 'Kuwait',
+      zipCode: '53267',
+      city: 'Port Rene',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 658978,
+    amountRequired: 629378,
+    description: 'Dolorem aut quia pariatur soluta. Soluta unde aliquam est dolor velit rerum nam odit dolores. Iste nihil hic ut quis vel aut consequuntur. Ducimus autem tenetur.\n \rOfficiis enim illo eum fugiat architecto in nihil inventore. Molestiae quos ea eum repudiandae. Quia minus itaque esse est nulla tempore. Repudiandae repudiandae similique incidunt.\n \rSapiente ullam quia aut quo necessitatibus atque quo impedit quod. Illum ad ut omnis a quisquam ipsum similique est. Consequatur placeat dolores dolorem iste sapiente perspiciatis. Enim consequatur officiis tenetur pariatur. Et natus sint qui corrupti voluptatibus rerum quae quisquam accusantium.',
+    currency: 'VUV'
+  },
+  {
+    id: 98137,
+    thumbnail: 'http://lorempixel.com/640/480/animals',
+    name: 'Rustic Metal Tuna',
+    location: {
+      country: 'Turkey',
+      zipCode: '53267',
+      city: 'Kaylitown',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 740755,
+    amountRequired: 265239,
+    description: 'Nemo numquam soluta nesciunt mollitia dolor magnam aut. Praesentium consequatur laborum inventore id tempore consectetur repellendus quis. Et rerum qui at. Aut quis reiciendis animi veniam.\n \rSimilique recusandae qui recusandae debitis illum. Voluptatem possimus quam nesciunt qui quia suscipit cupiditate molestiae accusantium. Numquam adipisci quasi. Eos error voluptatem accusantium neque enim. Ducimus repellat aperiam magnam quia consequatur cupiditate nisi necessitatibus.\n \rQuibusdam dolores tenetur quasi facere et quis. Facere autem sit quisquam sed similique cupiditate eligendi itaque earum. Sunt perferendis commodi eius nihil porro autem voluptas. Ea nihil molestiae consequatur.',
+    currency: 'VUV'
+  },
+  {
+    id: 50914,
+    thumbnail: 'http://lorempixel.com/640/480/business',
+    name: 'Sleek Plastic Ball',
+    location: {
+      country: 'Kiribati',
+      zipCode: '53267',
+      city: 'Port Geraldtown',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 540436,
+    amountRequired: 927702,
+    description: 'Voluptatibus aut corporis alias. Qui et fugiat delectus et. Quos suscipit aut. Qui veritatis repellendus. Qui quia delectus consequatur omnis. Ut qui porro recusandae sit impedit exercitationem.\n \rVoluptatibus aut nihil nulla velit et sunt. Eligendi molestias ut. Animi ut pariatur numquam amet voluptates. Sed deserunt vel aliquid. Inventore mollitia quia maxime quasi rerum deleniti. Non in fugiat accusantium officiis ut rem natus.\n \rAtque corrupti earum omnis suscipit. Repudiandae eveniet quae corporis voluptas voluptas. Vitae ut qui modi esse debitis non delectus velit neque. Unde velit qui. Minus ipsa et omnis quis vero consequatur quae quisquam voluptatibus.',
+    currency: 'VUV'
+  },
+  {
+    id: 77673,
+    thumbnail: 'http://lorempixel.com/640/480/abstract',
+    name: 'Gorgeous Granite Chips',
+    location: {
+      country: 'Iran',
+      zipCode: '53267',
+      city: 'McLaughlinstad',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 596050,
+    amountRequired: 695095,
+    description: 'Quia debitis omnis itaque placeat quod in numquam. Ducimus ullam eos consequuntur adipisci quisquam beatae nemo. Qui deleniti accusantium blanditiis saepe est ducimus.\n \rHarum et quidem. Omnis id labore ut quia quo laborum cumque. Vel error tempore deserunt nihil. Cum voluptas sit libero nulla aut ipsa aut. Consequatur nisi eum ut dolorem qui illum amet earum et. Sit aut aut et saepe.\n \rPraesentium nemo autem maiores dolorem dignissimos. Ut est laboriosam id accusamus aut quis molestiae consequatur. Voluptatem perferendis et temporibus vitae laboriosam libero esse blanditiis.',
+    currency: 'VUV'
+  },
+  {
+    id: 32560,
+    thumbnail: 'http://lorempixel.com/640/480/transport',
+    name: 'Fantastic Concrete Shirt',
+    location: {
+      country: 'Comoros',
+      zipCode: '53267',
+      city: 'Tomaston',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 153500,
+    amountRequired: 902024,
+    description: 'Ipsam sed numquam maxime sed. Aperiam alias aspernatur consequatur. Quia esse repudiandae in laudantium quos numquam. Est beatae quia. Ea inventore ut et numquam maxime aut error. Ab voluptas doloremque inventore autem.\n \rVoluptatem magnam in quia nihil officia animi. Et voluptas distinctio. A blanditiis id illum magni optio laudantium quas sint laudantium. Doloribus voluptas et eum inventore sequi sunt. Iste et aut autem et. Et explicabo totam asperiores aut aut.\n \rVero consequuntur quidem soluta ipsa aspernatur autem sit qui enim. Ratione sit iure officiis dicta quo aperiam beatae. Ut et repudiandae ut optio reprehenderit nam.',
+    currency: 'VUV'
+  },
+  {
+    id: 71991,
+    thumbnail: 'http://lorempixel.com/640/480/nature',
+    name: 'Rustic Steel Shirt',
+    location: {
+      country: 'Belgium',
+      zipCode: '53267',
+      city: 'Port Chaya',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 295707,
+    amountRequired: 830885,
+    description: 'Pariatur non illum. Voluptas quisquam non totam ratione porro sint quis. Eum explicabo quibusdam. Quo mollitia vel quaerat id magni quae. Est consequatur molestias omnis sequi soluta suscipit et numquam. Qui fuga eveniet tempora assumenda nihil ducimus.\n \rOmnis necessitatibus accusantium debitis recusandae aut. Amet vel dolorem quae rerum quod quae. Autem enim magnam iusto molestias. Odio quia libero fugiat error suscipit necessitatibus voluptatem officia. Esse delectus est accusamus provident voluptatem quia qui optio. Qui necessitatibus occaecati voluptatum ut expedita omnis et quasi.\n \rMagnam ut corporis fugiat repellat eius numquam dolores in. Rerum velit velit non velit provident non eaque ea. Est a sit ullam quae. Ipsam illum perferendis laudantium pariatur mollitia. Sit rerum pariatur.',
+    currency: 'VUV'
+  },
+  {
+    id: 87196,
+    thumbnail: 'http://lorempixel.com/640/480/transport',
+    name: 'Ergonomic Soft Shirt',
+    location: {
+      country: 'Mongolia',
+      zipCode: '53267',
+      city: 'North Justonside',
+      address: '13151 Hauck Junction Suite 747'
+    },
+    amount: 148230,
+    amountRequired: 741132,
+    description: 'Ratione dolorem omnis quo. Ipsum provident voluptas est rerum. Harum ad quo natus. Placeat inventore debitis quam laborum tenetur. Id sint qui qui architecto. Est consectetur cum ad placeat alias iure.\n \rSit numquam ut et quas. Debitis sequi adipisci. Ipsam earum mollitia sunt voluptas. Reprehenderit quasi eius. Eum voluptas eum perferendis.\n \rDeleniti minima ut et quia quas temporibus est adipisci omnis. Quia nihil perspiciatis. Odit commodi ullam impedit corporis labore et tempora magni. Aut natus aliquam velit sequi libero pariatur.',
+    currency: 'VUV'
+  }
+];

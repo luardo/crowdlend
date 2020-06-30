@@ -1,0 +1,44 @@
+<section class="container">
+
+  <h1 class="font-weight-bold">My dashboard</h1>
+  <div *ngIf="(user$ | async) as user" class="row mb-4">
+
+    <div class="col-12">
+      <ul class="list-group">
+        <li class="list-group-item">Username: {{ user.username }} </li>
+        <li class="list-group-item"> Full name: {{ user.fullName }}</li>
+        <li class="list-group-item">Email: {{ user.email }} </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="(projects$ | async) as projects">
+    <div class="row mb-4">
+      <div class="col-12">
+        <h2 class="font-weight-bold">My investments</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4" *ngFor="let project of projects">
+        <app-project-item
+          [id]="project.id"
+          [thumbnail]="project.thumbnail"
+          [name]="project.name"
+          [percentFunded]="project.fundedPercent"
+          [location]="project.cityAndCountry"
+          [description]="project.description"
+          [goal]="project.amountRequired"
+          [amount]="project.amount">
+        </app-project-item>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4" *ngIf="!(projects$ | async)">
+    <div class="col-12">
+      <h3>You haven't invest in any project</h3>
+      <button class="btn btn-block btn-primary" routerLink="/projects">Start investing now</button>
+    </div>
+  </div>
+</section>

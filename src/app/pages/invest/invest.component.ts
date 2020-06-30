@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectsService} from '../../services/projects.service';
-import {IProject, Project} from '../../models/project';
+import {Project} from '../../models/project';
 import {Options} from 'ng5-slider';
 import {InvestmentService} from '../../services/investment.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-invest',
@@ -13,6 +15,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class InvestComponent implements OnInit {
 
   submitted = false;
+  canInvest = false;
+  transactionSuccess: boolean;
   currentProject: Project;
   investmentForm: FormGroup;
   options: Options = {
@@ -25,8 +29,9 @@ export class InvestComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private projectService: ProjectsService,
-    private investmentService: InvestmentService) {
+    private projectsService: ProjectsService,
+    private investmentService: InvestmentService,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -36,8 +41,19 @@ export class InvestComponent implements OnInit {
       acceptTerms: [false, Validators.requiredTrue]
     });
 
-    this.projectService.getProjectById(1).subscribe(response => {
+    this.route.paramMap.pipe(
+      switchMap( params => {
+        const id = params.get('id');
+        return this.projectsService.getProjectById(id);
+      }),
+      tap(response => {
         this.currentProject = new Project(response);
+      }),
+      switchMap(response => {
+        return this.projectsService.getProjectAvailability(response.id.toString());
+      })
+    ).subscribe(({canInvest}) => {
+        this.canInvest = canInvest;
       }
     );
   }
@@ -46,7 +62,7 @@ export class InvestComponent implements OnInit {
     return this.investmentForm.controls;
   }
 
-  createInvestmentOrder() {
+  public createInvestmentOrder() {
     this.submitted = true;
 
     if (this.investmentForm.invalid) {
@@ -54,11 +70,11 @@ export class InvestComponent implements OnInit {
     }
 
     this.loading = true;
-    this.investmentService.createOrder('luis', this.currentProject.id, this.investmentFormControl.amount.value).subscribe(response => {
-      this.submitted = false;
-      this.loading = false;
-    });
-
+    this.investmentService.createOrder(this.currentProject.id.toString(), this.investmentFormControl.amount.value)
+      .subscribe(transactionId => {
+        this.loading = false;
+        this.currentProject.increaseAmount(this.investmentFormControl.amount.value);
+        this.transactionSuccess = !!transactionId;
+      });
   }
-
 }

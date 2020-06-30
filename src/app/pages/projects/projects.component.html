@@ -1,12 +1,11 @@
-<div class="container">
+<section class="container">
 
   <h3>Latest projects</h3>
 
   <div class="row" *ngIf="promotedProjects as projects">
-
     <div class="col-md-4" *ngFor="let project of projects">
 
-      <app-project-thumbnail
+      <app-project-item
         [id]="project.id"
         [thumbnail]="project.thumbnail"
         [amount]="project.amount"
@@ -15,12 +14,8 @@
         [percentFunded]="project.fundedPercent"
         [location]="project.cityAndCountry"
         [name]="project.name">
-
-      </app-project-thumbnail>
+      </app-project-item>
 
     </div>
-
-
   </div>
-
-</div>
+</section>

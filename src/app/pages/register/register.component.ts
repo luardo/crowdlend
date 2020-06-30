@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user.service';
 import {IUser} from '../../models/user';
-import {HttpClient} from '@angular/common/http';
 
 function MustMatch(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
@@ -36,8 +35,7 @@ export class RegisterComponent implements OnInit {
   registerFailed = false;
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService,
-              private http: HttpClient) {
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -58,8 +56,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-
-  submit() {
+  public submit() {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
@@ -74,6 +71,6 @@ export class RegisterComponent implements OnInit {
       password: this.registerFormControl.password.value
     };
 
-    this.userService.createUser(data).subscribe( userId => this.registerSuccess = !!userId);
+    this.userService.createUser(data).subscribe(userId => this.registerSuccess = !!userId);
   }
 }

@@ -27,7 +27,7 @@ export class Project {
   description: string;
 
   constructor(project: IProject) {
-    this.id = 122121;
+    this.id = project.id;
     this.amount = project.amount;
     this.name = project.name;
     this.thumbnail = project.thumbnail;
@@ -47,5 +47,9 @@ export class Project {
 
   get fundedPercent() {
     return this.amount / this.amountRequired * 100;
+  }
+
+  public increaseAmount(amount: number) {
+    this.amount = this.amount + amount;
   }
 }

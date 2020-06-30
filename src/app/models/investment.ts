@@ -1,18 +1,25 @@
-export class Investment {
+import * as Faker from 'faker';
 
-  username: string;
+export interface IInvestment {
+  userId: number;
+  projectId: number;
+  amountInvested: number;
+}
+
+export class Investment implements IInvestment {
+
+  userId: number;
   projectId: number;
   amountInvested: number;
 
-  constructor(username, projectId, amountInvested) {
-    this.username = username;
+  constructor(userId, projectId, amountInvested) {
+    this.userId = userId;
     this.projectId = projectId;
     this.amountInvested = amountInvested;
   }
 
-  getTransactionId(): number {
-    return 1;
-
+  public getTransactionId(): number {
+    return Faker.random.number();
   }
 
 }
