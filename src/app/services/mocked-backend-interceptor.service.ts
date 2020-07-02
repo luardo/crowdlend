@@ -5,6 +5,7 @@ import {projectsFromFakeDataBase} from '../mockdata/project.mock';
 import {delay} from 'rxjs/operators';
 import {User} from '../models/user';
 import {IInvestment, Investment} from '../models/investment';
+import {Order} from '../models/order';
 
 const testUser: User = new User({
   username: 'test',
@@ -37,8 +38,14 @@ export class MockedBackendInterceptorService implements HttpInterceptor {
         return canInvest();
 
       case url.endsWith('/api/investments') && method === 'POST':
+        return addInvestment();
 
-        return addNewInvestment();
+      case url.endsWith('/api/orders') && method === 'POST':
+        return addOrder();
+
+      case url.match(/\/orders\/\d+$/) && method === 'GET':
+        // creates neew user
+        return getOrderById();
 
       case url.match(/\/investments\/\d+$/) && method === 'GET':
         // creates neew user
@@ -67,6 +74,11 @@ export class MockedBackendInterceptorService implements HttpInterceptor {
 
     function isLoggedIn() {
       return headers.get('Authorization') === 'Bearer newtoken';
+    }
+
+    function getIdParam() {
+      const urlParts = url.split('/');
+      return Number(urlParts[urlParts.length - 1]);
     }
 
     function getUserById() {
@@ -98,6 +110,17 @@ export class MockedBackendInterceptorService implements HttpInterceptor {
         return response(investmentsFound);
 
       }
+    }
+
+    function getOrderById() {
+      const id = getIdParam();
+      const order: Order = JSON.parse(localStorage.getItem('orders'));
+
+      if (!order || order.id !== id) {
+        return throwError({error: {message: 'No order exists'}});
+      }
+
+      return response(order);
     }
 
     function getProjectById() {
@@ -149,23 +172,46 @@ export class MockedBackendInterceptorService implements HttpInterceptor {
       return !!investments && investments;
     }
 
-    function addNewInvestment() {
-      const investment: Investment = new Investment(body.userId, body.projectId, body.amount);
+    function addInvestment() {
 
-      const investments = getInvestments();
-      const newInvestment = {
-        userId: investment.userId, // ToDo here so set the user id
-        projectId: Number(body.projectId),
-        amount: body.amount
-      };
+      const {orderId} = body;
 
-      if (investments) {
-        localStorage.setItem('investments', JSON.stringify([newInvestment, ...investments]));
-      } else {
-        localStorage.setItem('investments', JSON.stringify([newInvestment]));
+      const orderFromLocalStorage: Order = JSON.parse(localStorage.getItem('orders'));
+
+      if (!orderFromLocalStorage || orderFromLocalStorage.id !== orderId) {
+        return throwError({error: {message: 'No order exists'}});
       }
 
-      return response(investment.getTransactionId());
+      const order = new Order(orderFromLocalStorage.userId, orderFromLocalStorage.projectId, orderFromLocalStorage.amountInvested, orderFromLocalStorage.id);
+
+      if (order.completed) {
+        return throwError({error: {message: 'this order has been completed'}});
+      }
+
+      const investment: Investment = new Investment(order.userId, order.projectId, order.amountInvested);
+
+      order.completeTransaction();
+
+      investment.createInvestmentId();
+      investment.transactionId = order.transactionId;
+      investment.orderId = order.id;
+
+      const savedInvestments = getInvestments();
+      if (savedInvestments) {
+        localStorage.setItem('investments', JSON.stringify([investment, ...savedInvestments]));
+      } else {
+        localStorage.setItem('investments', JSON.stringify([investment]));
+      }
+
+      localStorage.setItem('orders', JSON.stringify(order));
+
+      return response(investment);
+    }
+
+    function addOrder() {
+      const investmentOrder: Order = new Order(body.userId, body.projectId, body.amount);
+      localStorage.setItem('orders', JSON.stringify(investmentOrder));
+      return response(investmentOrder.id);
     }
 
     function canInvest() {

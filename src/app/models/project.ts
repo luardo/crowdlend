@@ -1,3 +1,5 @@
+import * as Faker from 'faker';
+
 export interface ILocation {
   city: string;
   country: string;
@@ -25,6 +27,7 @@ export class Project {
   amountRequired: number;
   currency: string;
   description: string;
+  interestRate: number;
 
   constructor(project: IProject) {
     this.id = project.id;
@@ -35,6 +38,9 @@ export class Project {
     this.currency = 'EUR';
     this.location = project.location;
     this.description = project.description;
+
+
+    this.calculateInterestRate();
   }
 
   get excerpt() {
@@ -51,5 +57,9 @@ export class Project {
 
   public increaseAmount(amount: number) {
     this.amount = this.amount + amount;
+  }
+
+  private calculateInterestRate() {
+    this.interestRate = Faker.random.number({min: 1, max: 6, precision: 0.2});
   }
 }

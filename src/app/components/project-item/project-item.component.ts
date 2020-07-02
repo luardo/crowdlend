@@ -15,6 +15,7 @@ export class ProjectItemComponent implements OnInit {
   @Input() goal: number;
   @Input() location: string;
   @Input() percentFunded: number;
+  @Input() interestRate: number;
 
 
 

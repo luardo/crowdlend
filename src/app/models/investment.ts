@@ -8,9 +8,13 @@ export interface IInvestment {
 
 export class Investment implements IInvestment {
 
+  id: number;
   userId: number;
   projectId: number;
   amountInvested: number;
+
+  transactionId: number;
+  orderId: number;
 
   constructor(userId, projectId, amountInvested) {
     this.userId = userId;
@@ -18,8 +22,7 @@ export class Investment implements IInvestment {
     this.amountInvested = amountInvested;
   }
 
-  public getTransactionId(): number {
-    return Faker.random.number();
+  createInvestmentId() {
+    this.id = Faker.random.number();
   }
-
 }

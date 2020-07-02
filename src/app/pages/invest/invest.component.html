@@ -1,41 +1,74 @@
-<section class="container mt-3" *ngIf="!!currentProject && !transactionSuccess">
+<section class="container mt-3" *ngIf="!!currentProject && !transactionSuccess && !order.completed">
 
-  <app-project-thumbnail
-    [id]="currentProject.id"
-    [amount]="currentProject.amount"
-    [amountRequired]="currentProject.amountRequired"
-    [name]="currentProject.name"
-    [fundedPercent]="currentProject.fundedPercent"
-    [thumbnail]="currentProject.thumbnail">
-  </app-project-thumbnail>
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
 
-  <form [formGroup]="investmentForm" (ngSubmit)="createInvestmentOrder()">
-    <div class="my-4">
-      <div class="h5 font-weight-bold">Select the amount to invest </div>
-      <ng5-slider [formControl]="investmentFormControl.amount" [options]="options"></ng5-slider>
+      <div class="mb-4">
+        <app-project-thumbnail
+          [id]="currentProject.id"
+          [amount]="currentProject.amount"
+          [amountRequired]="currentProject.amountRequired"
+          [name]="currentProject.name"
+          [fundedPercent]="currentProject.fundedPercent"
+          [thumbnail]="currentProject.thumbnail">
+        </app-project-thumbnail>
+      </div>
+
+      <div>
+        <table class="table table-sm">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Project</th>
+            <th scope="col">Investment</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{ currentProject.name }}</td>
+            <td>{{ order.amountInvested | currency:'EUR':'symbol':'1.0-0'  }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+
+      <form [formGroup]="investmentForm" (ngSubmit)="createInvestmentOrder()">
+        <div class="form-group form-check">
+          <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input"
+                 [ngClass]="{ 'is-invalid': submitted && investmentFormControl.acceptTerms.errors }"/>
+          <label for="acceptTerms" class="form-check-label small">Accept Terms & Conditions</label>
+          <div *ngIf="submitted && investmentFormControl.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is
+            required
+          </div>
+        </div>
+
+        <button class="btn btn-block btn-success btn-lg" *ngIf="canInvest">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          <ng-container *ngIf="loading">Processing transaction...</ng-container>
+          <ng-container *ngIf="!loading">Complete your order</ng-container>
+        </button>
+      </form>
+
+
+      <div class="alert alert-secondary small my-2" role="alert">
+        Hinweis gemäß § 12 Abs. 2 Vermögensanlagengesetz: Der Erwerb dieser Vermögensanlage ist mit erheblichen Risiken verbunden und kann zum vollständigen Verlust des eingesetzten Vermögens führen. Der in Aussicht gestellte Ertrag ist nicht gewährleistet und kann auch niedriger ausfallen.
+      </div>
+
     </div>
-
-    <div class="h3 text-center font-weight-bold">{{investmentFormControl.amount.value | currency }}</div>
-
-    <button class="btn btn-block btn-success btn-lg" *ngIf="canInvest">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-      <ng-container  *ngIf="loading">Processing transaction...</ng-container>
-      <ng-container *ngIf="!loading">Invest now!</ng-container>
-    </button>
-
-
-    <div class="form-group form-check">
-      <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && investmentFormControl.acceptTerms.errors }" />
-      <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
-      <div *ngIf="submitted && investmentFormControl.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
-    </div>
-  </form>
-
+  </div>
 </section>
 
 <div *ngIf="!currentProject">
   loading...
 </div>
+
+<div *ngIf="!submitted && order && order.completed && order.transactionId">
+  no valid transaction or order id
+</div>
+
 
 <section class="container" *ngIf="submitted && transactionSuccess">
   <div class="row">
@@ -44,23 +77,10 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-12">
-      <app-project-thumbnail
-        [id]="currentProject.id"
-        [amount]="currentProject.amount"
-        [amountRequired]="currentProject.amountRequired"
-        [name]="currentProject.name"
-        [fundedPercent]="currentProject.fundedPercent"
-        [thumbnail]="currentProject.thumbnail">
-      </app-project-thumbnail>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-auto">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
       <div class="text-center">
-        <h3>Your investment has been successful</h3>
+        <h3>Your investment with OrderId: #{{order.id}} has been successful</h3>
         <p>Want to invest in more projects? Explore more of the opportunities we have!</p>
 
         <button class="btn btn-lg btn-block btn-secondary" [routerLink]="'/dashboard'">Go to my dashboard</button>
@@ -68,6 +88,10 @@
         <button class="btn btn-lg btn-block btn-primary" [routerLink]="'/projects'">Discover more projects</button>
       </div>
     </div>
+  </div>
+
+  <div class="row">
+
   </div>
 
 </section>

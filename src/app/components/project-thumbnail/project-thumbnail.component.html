@@ -6,6 +6,6 @@
       <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{ width: fundedPercent + '%' }" aria-valuemin="0"
            aria-valuemax="100">{{ fundedPercent  | number: '1.0-0' }}%</div>
     </div>
-    <small>{{ amount | currency }} from {{ amountRequired | currency  }} financed ({{ fundedPercent  | number: '1.0-0' }}%)</small>
+    <small>{{ amount | currency }} from {{ amountRequired | currency:'EUR':'symbol':'1.0-0'  }} financed ({{ fundedPercent  | number: '1.0-0' }}%)</small>
   </div>
 </div>

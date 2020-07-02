@@ -14,9 +14,6 @@ export class CheckAuthService implements CanActivate {
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = this.authService.isLoggedIn;
-
-
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       return true;
     }

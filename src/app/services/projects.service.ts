@@ -18,7 +18,6 @@ export class ProjectsService {
   }
 
   public getProjectById(id: string) {
-    console.log(id);
     return this.http.get<Project>(`${environment.apiEndpoint}/projects/${id}`);
   }
 

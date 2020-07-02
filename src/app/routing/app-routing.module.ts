@@ -34,7 +34,7 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'project/:id/invest',
+    path: 'invest/:id',
     component: InvestComponent,
     canActivate: [CheckAuthService]
   },
@@ -42,7 +42,7 @@ const routes: Routes = [
     path: 'project/:id',
     component: SingleProjectComponent,
     canActivate: [CheckAuthService]
-  }
+  },
 
 ];
 

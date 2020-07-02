@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  createUser({username, name, lastname, email, password}: IUser): Observable<number> {
+  public createUser({username, name, lastname, email, password}: IUser): Observable<number> {
     return this.http.post<User>(`${environment.apiEndpoint}/users`, {username, password, name, lastname, email}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class UserService {
     }));
   }
 
-  getUserDetails(id): Observable<User> {
+  public getUserDetails(id): Observable<User> {
     return this.http.get<User>(`${environment.apiEndpoint}/users/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

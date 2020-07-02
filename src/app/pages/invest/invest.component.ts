@@ -6,6 +6,9 @@ import {InvestmentService} from '../../services/investment.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, tap} from 'rxjs/operators';
+import {OrdersService} from '../../services/orders.service';
+import {Investment} from '../../models/investment';
+import {Order} from '../../models/order';
 
 @Component({
   selector: 'app-invest',
@@ -17,6 +20,7 @@ export class InvestComponent implements OnInit {
   submitted = false;
   canInvest = false;
   transactionSuccess: boolean;
+  order: Order;
   currentProject: Project;
   investmentForm: FormGroup;
   options: Options = {
@@ -31,20 +35,24 @@ export class InvestComponent implements OnInit {
     private formBuilder: FormBuilder,
     private projectsService: ProjectsService,
     private investmentService: InvestmentService,
+    private orderService: OrdersService,
     private route: ActivatedRoute) {
   }
 
   ngOnInit() {
 
     this.investmentForm = this.formBuilder.group({
-      amount: [100, Validators.required],
       acceptTerms: [false, Validators.requiredTrue]
     });
 
     this.route.paramMap.pipe(
       switchMap( params => {
         const id = params.get('id');
-        return this.projectsService.getProjectById(id);
+        return this.orderService.getOrderById(id);
+      }),
+      tap( order => this.order = order),
+      switchMap( order => {
+        return  this.projectsService.getProjectById(order.projectId.toString());
       }),
       tap(response => {
         this.currentProject = new Project(response);
@@ -70,11 +78,11 @@ export class InvestComponent implements OnInit {
     }
 
     this.loading = true;
-    this.investmentService.createOrder(this.currentProject.id.toString(), this.investmentFormControl.amount.value)
-      .subscribe(transactionId => {
+    this.investmentService.completeOrder(this.order.id)
+      .subscribe((investment: Investment) => {
         this.loading = false;
-        this.currentProject.increaseAmount(this.investmentFormControl.amount.value);
-        this.transactionSuccess = !!transactionId;
+        this.currentProject.increaseAmount(investment.amountInvested);
+        this.transactionSuccess = !!investment.transactionId;
       });
   }
 }

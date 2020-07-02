@@ -14,10 +14,10 @@ export class InvestmentService {
   constructor(private http: HttpClient, private authService: AuthService) {
   }
 
-  public createOrder(projectId: string, amount: number): Observable<number> {
+  public completeOrder(orderId: number): Observable<Investment> {
     const {id}: User = this.authService.loggedUser;
 
-    return this.http.post<number>(`${environment.apiEndpoint}/investments`, {userId: id, projectId, amount}, {
+    return this.http.post<Investment>(`${environment.apiEndpoint}/investments`, {orderId}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer newtoken`,
